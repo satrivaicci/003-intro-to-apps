@@ -4,6 +4,8 @@ import dash
 from dash import html
 from dash import dcc
 import plotly.graph_objs as go
+import plotly.express as px
+
 
 ########### Define your variables
 beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
@@ -41,10 +43,15 @@ def make_that_cool_barchart(beers, ibu_values, abv_values, color1, color2, mytit
     beer_fig = go.Figure(data=beer_data, layout=beer_layout)
     return beer_fig
 
+def make_bubble_chart():
+    df = px.data.gapminder()
+    return px.scatter(df.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent", hover_name="country", log_x=True, size_max=60)
+
 
 ######### Run the function #######
 
 if __name__ == '__main__':
-    fig = make_that_cool_barchart(beers, ibu_values, abv_values, color1, color2, mytitle)
-    fig.write_html('docs/barchart.html')
-    print('We successfully updated the barchart!')
+    # fig = make_that_cool_barchart(beers, ibu_values, abv_values, color1, color2, mytitle)
+    fig = make_bubble_chart()
+    fig.write_html('docs/bubblechart.html')
+    print('We successfully updated the bubblechart!')
